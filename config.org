@@ -1,0 +1,142 @@
+#+TITLE: PaddyCo's Doom Emacs Config
+
+* General
+Some functionality uses this to identify you, e.g. GPG configuration, email
+clients, file templates and snippets.
+
+#+begin_src emacs-lisp
+(setq user-full-name "PaddyCo"
+      user-mail-address "patrik@not-a-real-email.com")
+#+end_src
+
+* Appearance
+** Fonts
+Doom exposes five (optional) variables for controlling fonts in Doom. Here
+are the three important ones:
+
++ ~doom-font~
++ ~doom-variable-pitch-font~
++ ~doom-big-font~ -- used for ~doom-big-font-mode~; use this for
+  presentations or streaming.
+
+They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
+font string. You generally only need these two:
+
+#+begin_src emacs-lisp
+(setq doom-font (font-spec :family "Fira Code" :size 16))
+#+end_src
+
+doom-variable-pitch-font (font-spec :family "sans-serif" :size 18))
+
+** Theme
+You can use ~load-theme~ (SPC h t) to explore and load new themes, set theme name below to save it:
+#+begin_src emacs-lisp
+(setq doom-theme 'doom-horizon)
+#+end_src
+
+** Other
+This determines the style of line numbers in effect. If set to `nil', line
+numbers are disabled. For relative line numbers, set this to `relative'.
+#+begin_src emacs-lisp
+(setq display-line-numbers-type t)
+#+end_src
+
+Automatically full-screen Emacs on start-up
+#+begin_src emacs-lisp
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+#+end_src
+
+* Writing
+Will automatically enable ~mixed-pitch-mode~ in specified modes
+#+begin_src emacs-lisp
+(defvar mixed-pitch-modes '(org-mode LaTeX-mode markdown-mode gfm-mode Info-mode)
+  "Modes that `mixed-pitch-mode' should be enabled in, but only after UI initialisation.")
+(defun init-mixed-pitch-h ()
+  "Hook `mixed-pitch-mode' into each mode in `mixed-pitch-modes'.
+Also immediately enables `mixed-pitch-modes' if currently in one of the modes."
+  (when (memq major-mode mixed-pitch-modes)
+    (mixed-pitch-mode 1))
+  (dolist (hook mixed-pitch-modes)
+    (add-hook (intern (concat (symbol-name hook) "-hook")) #'mixed-pitch-mode)))
+(add-hook 'doom-init-ui-hook #'init-mixed-pitch-h)
+#+end_src
+
+Set heading size in Markdown
+
+#+begin_src emacs-lisp
+(custom-set-faces
+ '(markdown-header-face-1 ((t (:inherit outline-1 :height 1.5))))
+ '(markdown-header-face-2 ((t (:inherit outline-2 :height 1.35))))
+ '(markdown-header-face-3 ((t (:inherit outline-3 :height 1.20))))
+ '(markdown-header-face-4 ((t (:inherit outline-4 :height 1.1)))))
+#+end_src
+
+* Org mode
+In this section I keep all Org mode specific configuration
+
+** Files
+Set Org directory
+#+begin_src emacs-lisp
+(setq org-directory "/mnt/dropbox/Org/")
+#+end_src
+
+Set Org agenda files
+#+begin_src emacs-lisp
+(setq org-agenda-files '("/mnt/dropbox/Org"))
+#+end_src
+
+Set deft files
+#+begin_src emacs-lisp
+(setq deft-directory "/mnt/dropbox/Org/Notes")
+#+end_src
+
+** Appearance
+Hide emphasis markers for bold/italic etc (e.g. *, /, _, =, ~ etc)
+#+begin_src emacs-lisp
+(setq org-hide-emphasis-markers t)
+#+end_src
+
+Better looking bullets for Org
+#+begin_src emacs-lisp
+(use-package! org-bullets
+    :config (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+#+end_src
+
+Bulleted lists
+#+begin_src emacs-lisp
+(font-lock-add-keywords 'org-mode
+                         '(("^ *\\([-+]\\) "
+                            (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+#+end_src
+
+Header sizes
+#+begin_src emacs-lisp
+(custom-set-faces
+  '(org-level-1 ((t (:inherit outline-1 :height 1.5))))
+  '(org-level-2 ((t (:inherit outline-2 :height 1.35))))
+  '(org-level-3 ((t (:inherit outline-3 :height 1.20))))
+  '(org-level-4 ((t (:inherit outline-4 :height 1.1))))
+)
+#+end_src
+
+** To-do
+
+*** TODO Global default HTML export styling?
+
+* Notes
+Here are some additional functions/macros that could help you configure Doom:
+
+- ~load!~ for loading external *.el files relative to this one
+- ~use-package!~ for configuring packages
+- ~after!~ for running code after a package has loaded
+- ~add-load-path!~ for adding directories to the ~load-path~, relative to
+  this file. Emacs searches the ~load-path~ when you load packages with
+  ~require~ or ~use-package~.
+- ~map!~ for binding new keys
+
+To get information about any of these functions/macros, move the cursor over
+the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
+This will open documentation for it, including demos of how they are used.
+
+You can also try ~gd~ (or 'C-c c d') to jump to their definition and see how
+they are implemented.
