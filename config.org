@@ -161,6 +161,14 @@ to use:
 
 *** TODO Global default HTML export styling?
 
+* Languages
+
+** Assembly
+Set =asm-mode= for =.inc= files
+#+begin_src emacs-lisp
+(add-to-list 'auto-mode-alist '("\\.inc\\'" . asm-mode))
+#+end_src
+
 * Notes
 Here are some additional functions/macros that could help you configure Doom:
 
