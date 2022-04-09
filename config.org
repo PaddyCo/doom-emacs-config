@@ -164,9 +164,16 @@ to use:
 * Languages
 
 ** Assembly
-Set =asm-mode= for =.inc= files
+
+Use my scuffed =ca65-mode= package
 #+begin_src emacs-lisp
-(add-to-list 'auto-mode-alist '("\\.inc\\'" . asm-mode))
+(use-package! ca65-mode)
+#+end_src
+
+Set =ca65-mode= for =.s= &  =.inc= files
+#+begin_src emacs-lisp
+(add-to-list 'auto-mode-alist '("\\.inc\\'" . ca65-mode))
+(add-to-list 'auto-mode-alist '("\\.s\\'" . ca65-mode))
 #+end_src
 
 * Notes
