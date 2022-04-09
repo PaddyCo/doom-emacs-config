@@ -9,7 +9,7 @@
    ["#232530" "#e95678" "#09f7a0" "#fab795" "#21bfc2" "#6c6f93" "#59e3e3" "#c7c9cb"])
  '(auth-source-save-behavior nil)
  '(custom-safe-themes
-   '("c4063322b5011829f7fdd7509979b5823e8eea2abf1fe5572ec4b7af1dd78519" default))
+   '("23c806e34594a583ea5bbf5adf9a964afe4f28b4467d28777bcba0d35aa0872e" "c4063322b5011829f7fdd7509979b5823e8eea2abf1fe5572ec4b7af1dd78519" default))
  '(exwm-floating-border-color "#16161c")
  '(fci-rule-color "#f9cec3")
  '(highlight-tail-colors ((("#203a3b") . 0) (("#283841") . 20)))
@@ -47,4 +47,11 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(markdown-header-face-1 ((t (:inherit outline-1 :height 1.5))))
+ '(markdown-header-face-2 ((t (:inherit outline-2 :height 1.35))))
+ '(markdown-header-face-3 ((t (:inherit outline-3 :height 1.2))))
+ '(markdown-header-face-4 ((t (:inherit outline-4 :height 1.1))))
+ '(org-level-1 ((t (:inherit outline-1 :height 1.5))))
+ '(org-level-2 ((t (:inherit outline-2 :height 1.35))))
+ '(org-level-3 ((t (:inherit outline-3 :height 1.2))))
+ '(org-level-4 ((t (:inherit outline-4 :height 1.1)))))

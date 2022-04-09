@@ -52,3 +52,4 @@
 (package! org-bullets)
 (package! ca65-mode
   :recipe (:host github :repo "PaddyCo/ca65-mode"))
+(package! org-download)
